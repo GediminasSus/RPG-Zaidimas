@@ -1,3 +1,8 @@
+package game;
+
+import game.mechanics.*;
+import game.panels.InventoryPanel;
+import game.panels.StatsContainerPanel;
 import java.awt.*;
 import java.util.List;
 import javax.swing.*;

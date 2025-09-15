@@ -1,3 +1,5 @@
+package game.mechanics;
+
 import java.util.Random;
 
 public class Potion extends Item {

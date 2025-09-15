@@ -1,6 +1,9 @@
+package game.panels;
 import java.awt.*;
 import java.util.List;
 import javax.swing.*;
+
+import game.mechanics.PlayerCharacter;
 
 public class StatsContainerPanel extends JPanel {
     public StatsContainerPanel(List<PlayerCharacter> party) {

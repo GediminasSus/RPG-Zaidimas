@@ -1,3 +1,5 @@
+package game.mechanics;
+
 import java.util.List;
 
 public class Monster {

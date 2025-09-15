@@ -1,3 +1,11 @@
+package game;
+import game.lists.ArmorList;
+import game.lists.PotionList;
+import game.lists.SpellList;
+import game.lists.WeaponList;
+import game.mechanics.Item;
+import game.mechanics.PlayerCharacter;
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,3 +1,5 @@
+package game.mechanics;
+
 import java.util.ArrayList;
 import java.util.List;
 

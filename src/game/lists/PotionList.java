@@ -1,3 +1,6 @@
+package game.lists;
+
+import game.mechanics.Potion;
 
 public class PotionList {
     private PotionList() {} // Prevent instantiation

@@ -1,3 +1,5 @@
+package game.panels;
+import game.mechanics.PlayerCharacter;
 import java.awt.*;
 import javax.swing.*;
 

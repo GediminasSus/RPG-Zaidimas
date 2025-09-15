@@ -1,4 +1,7 @@
+package game.mechanics;
 
+
+import game.MainWindow;
 import java.util.*;
 import javax.swing.*;
 

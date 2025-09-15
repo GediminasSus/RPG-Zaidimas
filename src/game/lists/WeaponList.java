@@ -1,3 +1,5 @@
+package game.lists;
+import game.mechanics.Weapon;
 import java.util.Set;
 
 public class WeaponList {

@@ -1,3 +1,8 @@
+package game;
+import game.lists.MonsterList;
+import game.mechanics.CombatSystem;
+import game.mechanics.Monster;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;

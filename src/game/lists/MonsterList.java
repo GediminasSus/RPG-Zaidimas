@@ -1,3 +1,6 @@
+package game.lists;
+
+import game.mechanics.Monster;
 
 public class MonsterList {
 

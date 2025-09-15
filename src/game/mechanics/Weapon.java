@@ -1,3 +1,4 @@
+package game.mechanics;
 import java.util.Set;
 
 public class Weapon extends Item {

@@ -1,4 +1,8 @@
+package game.lists;
+
 import java.util.Set;
+
+import game.mechanics.Spell;
 
 public class SpellList {
 

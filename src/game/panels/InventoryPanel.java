@@ -1,6 +1,10 @@
+package game.panels;
+
+import game.mechanics.*;
 import java.awt.*;
 import java.util.List;
 import javax.swing.*;
+
 
 public class InventoryPanel extends JPanel {
     private final JTextArea inventoryText;
@@ -30,7 +34,7 @@ public class InventoryPanel extends JPanel {
                 sb.append(" [Weapon, +").append(weapon.getHitBonus()).append(" hit]");
             } else if (item instanceof Armor armor) {
                 sb.append(" [Armor, +").append(armor.getAcBonus()).append(" AC]");
-            } else if (item instanceof Potion potion) {
+            } else if (item instanceof Potion ) {
                 sb.append(" [Potion]");
             }
             sb.append("\n");

@@ -1,3 +1,5 @@
+package game.mechanics;
+
 
 public abstract class Item {
     protected String name;
