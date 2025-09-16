@@ -1,6 +1,5 @@
 package game.panels;
 
-import game.MainWindow;
 import java.awt.*;
 import javax.swing.*;
 
@@ -64,9 +63,18 @@ public class StartScreen extends JFrame {
         add(panel);
 
         // Button actions
+
+        /*  startButton.addActionListener(e -> {
+            setContentPane(new PartyCreationPanel(this)); // Pass MainWindow reference
+            revalidate();
+            repaint();
+            });
+        */
+
         startButton.addActionListener(e -> {
-            new MainWindow();
-            dispose(); // Close start screen
+            setContentPane(new PartyCreationPanel());
+            revalidate();
+            repaint();
         });
 
         loadButton.addActionListener(e -> {
@@ -74,11 +82,11 @@ public class StartScreen extends JFrame {
         });
 
         continueButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Load functionality not yet implemented.");
+            JOptionPane.showMessageDialog(this, "Continue functionality not yet implemented.");
         });
 
         saveButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Load functionality not yet implemented.");
+            JOptionPane.showMessageDialog(this, "Save functionality not yet implemented.");
         });
 
         quitButton.addActionListener(e -> System.exit(0));

@@ -50,7 +50,7 @@ public class CombatSystem {
     
         if (uiRef != null) {
             uiRef.updateMenuForExploration(); // Restore original menu
-            uiRef.enableDungeonControls(true); // <- custom method to re-enable movement
+            uiRef.enableDungeonControls(true); //  re-enable movement
         }
 
     return;

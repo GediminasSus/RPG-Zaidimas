@@ -5,7 +5,7 @@ import game.mechanics.Potion;
 public class PotionList {
     private PotionList() {} // Prevent instantiation
 
-    /*  examples to add:
+    /*  
 
     public static List<Potion> allHealingPotions() {
     return List.of(LesserHealingPotion(), HealingPotion(), GreaterHealingPotion(), UltimatePotion());

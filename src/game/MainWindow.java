@@ -1,8 +1,7 @@
 package game;
 
 import game.mechanics.*;
-import game.panels.InventoryPanel;
-import game.panels.StatsContainerPanel;
+import game.panels.*;
 import java.awt.*;
 import java.util.List;
 import javax.swing.*;
@@ -12,17 +11,21 @@ public class MainWindow extends JFrame {
     private JPanel menuPanel;
     private DungeonViewer dungeonViewerPanel;
     
-    public MainWindow() {
+    public MainWindow(List<PlayerCharacter> partyMembers) {
         setTitle("Dungeon Game");
         setLayout(new BorderLayout());
     
-        
-        PlayerParty party = new PlayerParty();
-        party.createCharacters();
+        //public void startGameWithParty(PlayerParty party) {
+        //getContentPane().removeAll();
+
+       /*  PlayerParty party = new PlayerParty();
+        party.createCharacters(); */
     
+        PlayerParty party = new PlayerParty(partyMembers); 
+
         Dungeon dungeon = new Dungeon(50, 30);
         JTextArea combatLog = new JTextArea();
-        DungeonViewer dungeonViewerPanel = new DungeonViewer(dungeon, combatLog, party, this);
+        dungeonViewerPanel = new DungeonViewer(dungeon, combatLog, party, this); 
     
         //  Map Panel
         JPanel mapPanel = new JPanel(new BorderLayout());
@@ -59,7 +62,7 @@ public class MainWindow extends JFrame {
         //  Menu Panel 
         menuPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         menuPanel.setBorder(BorderFactory.createTitledBorder("Menu"));
-        updateMenuForExploration(); // initial state
+        updateMenuForExploration(); 
         add(menuPanel, BorderLayout.PAGE_END);
         
 
@@ -67,7 +70,7 @@ public class MainWindow extends JFrame {
         dungeonViewerPanel.setPreferredSize(new Dimension(800, 400)); // bigger than stats
         statsPanel.setPreferredSize(new Dimension(400, 400));        
     
-        //  Final window setup ─────────────
+        //  Final window setup 
         setPreferredSize(new Dimension(1280, 1024));
         pack();                         
         setLocationRelativeTo(null);    
@@ -77,6 +80,9 @@ public class MainWindow extends JFrame {
     
         dungeonViewerPanel.setFocusable(true);
         dungeonViewerPanel.requestFocusInWindow();
+
+        revalidate();
+        repaint();
     }
 
     public void updateMenuForExploration() {
@@ -125,7 +131,7 @@ public class MainWindow extends JFrame {
 
 
     
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(MainWindow::new);
-    }
+   // public static void main(String[] args) {
+   //     SwingUtilities.invokeLater(MainWindow::new);
+   //}
 }
