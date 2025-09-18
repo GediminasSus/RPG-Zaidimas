@@ -14,24 +14,24 @@ public class CombatSystem {
     private static MainWindow uiRef; 
 
     record CombatActor(Object actor, int initiative, boolean isPlayer) {}
-
+    // turn order
     public static void run(List<PlayerCharacter> pcs, List<Monster> ms, JTextArea log, MainWindow ui) {
         players = pcs;
         monsters = ms;
         combatLog = log;
         uiRef = ui;
 
-        Random rand = new Random();
+        
         turnOrder = new ArrayList<>();
-
+        // initiative roll
         for (PlayerCharacter pc : players) {
-            int roll = rand.nextInt(20) + 1 + pc.getModifier("DEX");
+            int roll = Dice.roll(1, 20, pc.getModifier("DEX"));
             turnOrder.add(new CombatActor(pc, roll, true));
             combatLog.append(pc.getName() + " rolls initiative: " + roll + "\n");
         }
 
         for (Monster m : monsters) {
-            int roll = rand.nextInt(20) + 1;
+            int roll = Dice.roll(1, 20);
             turnOrder.add(new CombatActor(m, roll, false));
             combatLog.append(m.getName() + " rolls initiative: " + roll + "\n");
         }
@@ -42,7 +42,7 @@ public class CombatSystem {
         turnIndex = 0;
         nextCombatTurn(); // start loop
     }
-
+    
     public static void nextCombatTurn() {
         if (players.stream().noneMatch(p -> p.getCurrentHP() > 0)|| monsters.stream().noneMatch(m -> !m.isDead())) {
     
@@ -57,7 +57,7 @@ public class CombatSystem {
 }
 
         if (turnIndex >= turnOrder.size()) turnIndex = 0;
-
+        // player or monster turn
         CombatActor actor = turnOrder.get(turnIndex++);
         if (actor.isPlayer()) {
             PlayerCharacter pc = (PlayerCharacter) actor.actor();
@@ -80,13 +80,13 @@ public class CombatSystem {
                 .findAny().orElse(null);
             if (target == null) return;
 
-            Random rand = new Random();
-            int roll = rand.nextInt(20) + 1 + m.getHitBonus();
+            // monsters attack roll
+            int roll = Dice.roll(1, 20, m.getHitBonus());
 
             combatLog.append(m.getName() + " attacks " + target.getName() + " → roll " + roll + "\n");
 
             if (roll >= target.getTotalArmorClass()) {
-                int dmg = m.mRollDamage();
+                int dmg = Dice.roll(m.getNumDice(), m.getDiceSize(), m.getBonusDamage());
                 target.playerTakeDamage(dmg);
                 combatLog.append("Hit! Deals " + dmg + " damage.\n");
             } else {
@@ -105,19 +105,21 @@ public class CombatSystem {
     
 
     public static void performAttack(PlayerCharacter pc, List<Monster> monsters, JTextArea combatLog) {
-        Random rand = new Random();
+        
         Monster target = monsters.stream().filter(m -> !m.isDead()).findFirst().orElse(null);
         if (target == null) return;
     
         Weapon weapon = pc.getEquippedWeapon();
         String stat = weapon.getScalingStat();
+        int diceSize = weapon.getDiceSize();
+        int numDice = weapon.getNumDice();
         int hitBonus = weapon.getHitBonus() + pc.getModifier(stat);
-        int roll = rand.nextInt(20) + 1 + hitBonus;
+        int roll = Dice.roll(1, 20, hitBonus);
     
         combatLog.append(pc.getName() + " attacks " + target.getName() + " → roll " + roll + "\n");
     
         if (roll >= target.getArmorClass()) {
-            int dmg = weapon.rollDamage() + pc.getModifier(stat);
+            int dmg = Dice.roll(numDice, diceSize, pc.getModifier(stat));
             target.takeDamage(dmg);
             combatLog.append("Hit! Deals " + dmg + " damage.\n");
         } else {
@@ -143,8 +145,8 @@ public class CombatSystem {
         Potion potion = (Potion) potions.stream().filter(p -> p.getName().equals(selected)).findFirst().orElse(null);
         if (potion == null) return;
     
-        pc.heal(potion.getHealAmount());
-        pc.restoreMana(potion.getManaAmount());
+        pc.heal(Dice.roll(potion.getNumDice(), potion.getDiceSize(), potion.getbBonus()));
+        pc.restoreMana(Dice.roll(potion.getNumDice(), potion.getDiceSize(), potion.getbBonus()));
         pc.getInventory().remove(potion);
     
         combatLog.append(pc.getName() + " uses " + potion.getName() + ".\n");
@@ -173,7 +175,7 @@ public class CombatSystem {
         pc.setCurrentMana(pc.getCurrentMana() - spell.getManaCost());
     
         if (spell.isHeal()) {
-            int heal = spell.getEffectiveHealing(pc);
+            int heal = Dice.roll(spell.getNumDice(), spell.getDiceSize(), spell.getBonus());
             pc.heal(heal);
             combatLog.append(pc.getName() + " casts " + spell.getName() + " and restores " + heal + " HP.\n");
             return;
@@ -182,16 +184,16 @@ public class CombatSystem {
         Monster target = monsters.stream().filter(m -> !m.isDead()).findFirst().orElse(null);
         if (target == null) return;
     
-        Random rand = new Random();
+      
     
         if (spell.isBoundToWeapon()) {
             Weapon weapon = pc.getEquippedWeapon();
-            int toHit = rand.nextInt(20) + 1 + weapon.getHitBonus() + pc.getModifier(weapon.getScalingStat());
+            int toHit = Dice.roll(1, 20, weapon.getHitBonus()) + pc.getModifier(weapon.getScalingStat());
             combatLog.append(pc.getName() + " swings weapon with " + spell.getName() + " → roll " + toHit + "\n");
     
             if (toHit >= target.getArmorClass()) {
-                int weaponDmg = weapon.rollDamage() + pc.getModifier(weapon.getScalingStat());
-                int spellDmg = spell.getEffectiveDamage(pc);
+                int weaponDmg = Dice.roll(weapon.getNumDice(), weapon.getDiceSize(), pc.getModifier(weapon.getScalingStat()));
+                int spellDmg = Dice.roll(spell.getNumDice(), spell.getDiceSize(), spell.getBonus());
                 int totalDmg = weaponDmg + spellDmg;
                 target.takeDamage(totalDmg);
                 combatLog.append("Hit! Deals " + totalDmg + " damage (" + weaponDmg + " weapon + " + spellDmg + " spell).\n");
@@ -200,11 +202,11 @@ public class CombatSystem {
             }
     
         } else {
-            int toHit = rand.nextInt(20) + 1 + pc.getModifier(spell.getScalingStat());
+            int toHit = Dice.roll(1, 20, pc.getModifier(spell.getScalingStat()));
             combatLog.append(pc.getName() + " casts " + spell.getName() + " → roll " + toHit + "\n");
     
             if (toHit >= target.getArmorClass()) {
-                int dmg = spell.getEffectiveDamage(pc);
+                int dmg = Dice.roll(spell.getNumDice(), spell.getDiceSize(), spell.getBonus());
                 target.takeDamage(dmg);
                 combatLog.append("Hit! Deals " + dmg + " damage.\n");
             } else {

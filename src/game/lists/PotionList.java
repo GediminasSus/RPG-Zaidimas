@@ -3,18 +3,7 @@ package game.lists;
 import game.mechanics.Potion;
 
 public class PotionList {
-    private PotionList() {} // Prevent instantiation
-
-    /*  
-
-    public static List<Potion> allHealingPotions() {
-    return List.of(LesserHealingPotion(), HealingPotion(), GreaterHealingPotion(), UltimatePotion());
-    }
-
-    public static Potion randomHealingPotion() {
-        List<Potion> list = allHealingPotions();
-        return list.get((int)(Math.random() * list.size()));
-    } */
+    private PotionList() {} 
 
     // potions lesser
     public static Potion lesserHealingPotion() {

@@ -33,6 +33,10 @@ public class PartyCreationPanel extends JFrame {
             formPanel.add(classBox);
         }
 
+        
+
+       
+
         JButton startBtn = new JButton("Start Game");
         startBtn.addActionListener(e -> {
             List<PlayerCharacter> party = new ArrayList<>();

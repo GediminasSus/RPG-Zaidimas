@@ -34,16 +34,16 @@ public class StartScreen extends JFrame {
         loadButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         quitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        /*Dimension buttonSize = new Dimension(200, 40);
-        continueButton.setPreferredSize(buttonSize);
-        startButton.setPreferredSize(buttonSize);
-        saveButton.setPreferredSize(buttonSize);
-        loadButton.setPreferredSize(buttonSize);
-        quitButton.setPreferredSize(buttonSize);
+        /*Dimension buttonSize = new Dimension(200, 40)
+        continueButton.setPreferredSize(buttonSize)
+        startButton.setPreferredSize(buttonSize)
+        saveButton.setPreferredSize(buttonSize)
+        loadButton.setPreferredSize(buttonSize)
+        quitButton.setPreferredSize(buttonSize)
 
-        continueButton.setMaximumSize(new Dimension(200, 40));
-        continueButton.setMinimumSize(new Dimension(200, 40));
-        continueButton.setPreferredSize(new Dimension(200, 40));*/
+        continueButton.setMaximumSize(new Dimension(200, 40))
+        continueButton.setMinimumSize(new Dimension(200, 40))
+        continueButton.setPreferredSize(new Dimension(200, 40))*/
 
         
 
@@ -64,12 +64,6 @@ public class StartScreen extends JFrame {
 
         // Button actions
 
-        /*  startButton.addActionListener(e -> {
-            setContentPane(new PartyCreationPanel(this)); // Pass MainWindow reference
-            revalidate();
-            repaint();
-            });
-        */
 
         startButton.addActionListener(e -> {
             setContentPane(new PartyCreationPanel());

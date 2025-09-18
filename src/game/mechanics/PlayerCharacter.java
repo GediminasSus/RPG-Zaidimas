@@ -4,10 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerCharacter {
-    private String name;
-    private String characterClass;
-    private int strength, dexterity, constitution, intelligence, wisdom, charisma;
-    private int currentHP, maxHP, currentMana, maxMana;
+    private final String name;
+    private final String characterClass;
+    private int strength;
+    private int dexterity;
+    private int constitution;
+    private int intelligence;
+    private int wisdom;
+    private int charisma;
+    private int currentHP;
+    private int maxHP;
+    private int currentMana;
+    private int maxMana;
     private Weapon equippedWeapon;
     private Armor equippedArmor;
     private final List<Item> inventory = new ArrayList<>();

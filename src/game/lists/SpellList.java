@@ -1,10 +1,11 @@
 package game.lists;
 
+import game.mechanics.Spell;
 import java.util.Set;
 
-import game.mechanics.Spell;
-
 public class SpellList {
+
+    private SpellList() {}
 
     public static Spell healingHands() {
         return new Spell(
@@ -38,7 +39,7 @@ public class SpellList {
         );
     }
 
-    public static Spell LesserRestoration() {
+    public static Spell lesserRestoration() {
         return new Spell(
             "Lesser restoration",                                  
             "Restore 1hp to someone who was knocked down and is with 0 hp.",  

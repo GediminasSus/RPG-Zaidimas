@@ -3,13 +3,14 @@ import game.mechanics.Weapon;
 import java.util.Set;
 
 public class WeaponList {
+
+    private WeaponList() {}
     // basic weapons
     public static Weapon shortSword() {
         Weapon shortSword = new Weapon(
             "Short Sword", // Name
             "A simple steel sword. Reliable in close combat.", // Description
             8,      // Dice of damage
-            0,      // bonus damage
             0,      // hit bonus
             "STR",  // Scaling stat
             0,      // AC bonus
@@ -26,7 +27,6 @@ public class WeaponList {
             "A standart issue sword and shield.", 
             6,      
             0,      
-            0,      
             "STR",  
             2,      
             1,      
@@ -41,7 +41,6 @@ public class WeaponList {
             "Dagger",
             "A lightweight, easily concealed blade.",
             4,
-            0,
             0,
             "DEX",
             0,
@@ -58,7 +57,6 @@ public class WeaponList {
             "Massive two-handed sword for crushing foes.",
             12,      
             0,      
-            0,      
             "STR",  
             0,      
             1,      
@@ -73,7 +71,6 @@ public class WeaponList {
             "Mace",
             "A heavy blunt weapon ideal for priests.",
             6,      
-            0,      
             0,      
             "STR",  
             0,      
@@ -90,7 +87,6 @@ public class WeaponList {
             "A basic wooden staff used by spellcasters.",
             6,      
             0,      
-            0,      
             "DEX",  
             0,      
             1,      
@@ -105,7 +101,6 @@ public class WeaponList {
             "Wand of Sparks",
             "Casts a small arcane bolt. Better with magic.",
             4,      
-            0,      
             0,      
             "WIS",  
             0,      
@@ -122,7 +117,6 @@ public class WeaponList {
             "A simple bow. Good for quick ranged attacks.",
             6,      
             0,      
-            0,      
             "DEX",  
             0,      
             1,      
@@ -136,8 +130,7 @@ public class WeaponList {
         Weapon shortSword1 = new Weapon(
             "Short Sword + 1", // Name
             "A quality steel sword.", // Description
-            8,      // Dice of damage
-            1,      // bonus damage
+            10,      // Dice of damage
             1,      // hit bonus
             "STR",  // Scaling stat
             0,      // AC bonus
@@ -151,8 +144,7 @@ public class WeaponList {
         Weapon swordAndShield1 = new Weapon(
             "Sword and shield + 1", 
             "Sword and shield of a Paladin.", 
-            6,      
-            1,      
+            8,      
             1,      
             "STR",  
             3,      
@@ -167,8 +159,7 @@ public class WeaponList {
         Weapon dagger1 = new Weapon(
             "Dagger + 1",
             "Llightweight, mage from obsidian.",
-            4,
-            2,
+            6,
             1,
             "DEX",
             0,
@@ -183,8 +174,7 @@ public class WeaponList {
         Weapon greatsword1 = new Weapon(
             "Greatsword + 1",
             "Quality two-handed sword.",
-            12,      
-            1,      
+            14,      
             1,      
             "STR",  
             0,      
@@ -198,8 +188,7 @@ public class WeaponList {
         Weapon mace1 = new Weapon(
             "Mace + 1",
             "The Holy mace of judgement.",
-            6,      
-            1,      
+            8,      
             1,      
             "STR",  
             0,      
@@ -213,8 +202,7 @@ public class WeaponList {
         Weapon staff1 = new Weapon(
             "Quarterstaff + 1",
             "Masterfully crafted staff.",
-            6,      
-            1,      
+            8,      
             1,      
             "DEX",  
             0,      
@@ -229,8 +217,7 @@ public class WeaponList {
         Weapon wand1 = new Weapon(
             "Wand of Sparks + 1",
             "Has lighting trapped inside.",
-            4,      
-            2,      
+            8,      
             1,      
             "WIS",  
             0,      
@@ -245,8 +232,7 @@ public class WeaponList {
         Weapon bow1 = new Weapon(
             "Short Bow + 1",
             "Elven craftmenship bow.",
-            6,      
-            1,      
+            8,      
             1,      
             "DEX",  
             0,      

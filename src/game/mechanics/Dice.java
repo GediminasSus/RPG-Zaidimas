@@ -3,6 +3,7 @@ package game.mechanics;
 import java.util.Random;
 
 public class Dice {
+    private Dice() {}
     private static final Random rand = new Random();
 
     public static int roll(int numberOfDice, int diceSides) {
@@ -32,8 +33,8 @@ public class Dice {
     private static int singleRoll(int numberOfDice, int diceSides, int bonus) {
         int total = 0;
         for (int i = 0; i < numberOfDice; i++) {
-            total += rand.nextInt(diceSides) + 1;
+            total += rand.nextInt(diceSides) + 1 + bonus;
         }
-        return total + bonus;
+        return total;
     }
 }

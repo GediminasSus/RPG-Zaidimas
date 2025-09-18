@@ -1,12 +1,13 @@
 package game;
+import game.lists.StartingEquipment;
 import game.mechanics.Item;
 import game.mechanics.PlayerCharacter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerParty {
-    private List<PlayerCharacter> members;
-    private List<Item> partyInventory;
+    private final List<PlayerCharacter> members;
+    private final List<Item> partyInventory;
     private int gold;
 
     public PlayerParty(List<PlayerCharacter> customMembers) {
@@ -14,10 +15,9 @@ public class PlayerParty {
         this.partyInventory = new ArrayList<>();
         this.gold = 100;
 
-        // Optional: give starter items
-       // for (PlayerCharacter pc : members) {
-       //     pc.getInventory().add(PotionList.basicHealthPotion());
-       // }
+        for (PlayerCharacter pc : customMembers) {
+            StartingEquipment.assign(pc);
+        }
     }
 
     public List<PlayerCharacter> getMembers() { return members; }
