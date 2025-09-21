@@ -21,17 +21,17 @@ public class StartScreen extends JFrame {
 
         JButton startButton = new JButton("Start New Game");
         
-        JButton continueButton = new JButton("Continue");
-        JButton saveButton = new JButton("Save Game");
-        JButton loadButton = new JButton("Load Game");
+        //JButton continueButton = new JButton("Continue");
+        //JButton saveButton = new JButton("Save Game");
+        //JButton loadButton = new JButton("Load Game");
         JButton quitButton = new JButton("Quit");
 
 
 
-        continueButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        //continueButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        saveButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        loadButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        //saveButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        //loadButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         quitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         /*Dimension buttonSize = new Dimension(200, 40)
@@ -50,13 +50,13 @@ public class StartScreen extends JFrame {
         panel.add(Box.createVerticalStrut(240));
         panel.add(title);
         panel.add(Box.createVerticalStrut(30));
-        panel.add(continueButton);
-        panel.add(Box.createVerticalStrut(10));
+       // panel.add(continueButton);
+       // panel.add(Box.createVerticalStrut(10));
         panel.add(startButton);
+       // panel.add(Box.createVerticalStrut(10));
+       // panel.add(saveButton);
         panel.add(Box.createVerticalStrut(10));
-        panel.add(saveButton);
-        panel.add(Box.createVerticalStrut(10));
-        panel.add(loadButton);
+       // panel.add(loadButton);
         panel.add(Box.createVerticalStrut(10));
         panel.add(quitButton);
 
@@ -71,17 +71,17 @@ public class StartScreen extends JFrame {
             repaint();
         });
 
-        loadButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Load functionality not yet implemented.");
-        });
+        //loadButton.addActionListener(e -> {
+        //    JOptionPane.showMessageDialog(this, "Load functionality not yet implemented.");
+        //});
 
-        continueButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Continue functionality not yet implemented.");
-        });
+        //continueButton.addActionListener(e -> {
+        //    JOptionPane.showMessageDialog(this, "Continue functionality not yet implemented.");
+        //});
 
-        saveButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Save functionality not yet implemented.");
-        });
+        //saveButton.addActionListener(e -> {
+        //    JOptionPane.showMessageDialog(this, "Save functionality not yet implemented.");
+        //});
 
         quitButton.addActionListener(e -> System.exit(0));
     }

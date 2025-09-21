@@ -11,13 +11,13 @@ public class SpellList {
         return new Spell(
             "Healing hands",                                  // name
             "You lay hands on someone to heal them.",  // descrption
-            5,                                            // mana cost
+            1,                                            // mana cost
             4,                                          // dice
             2,                                             // number of dice
             0,                                         // bonus
             true,                                           // is heal?
             false,                                 // is bound to weapon attack
-            "WIS",                                     // casting modifier
+            "CHA",                                     // casting modifier
             Set.of("Paladin"),                     // calsses that can use
             1                                           // spell level
         );
@@ -27,40 +27,24 @@ public class SpellList {
         return new Spell(
             "Divine smite",                                  
             "You smite your enemies with holy damage.",  
-            10,                                            
+            3,                                            
             6,                                          
             2,                                             
             0,                                         
             false,                                           
             true,                                 
-            "WIS",                                     
+            "CHA",                                     
             Set.of("Paladin"),
             3                     
         );
     }
 
-    public static Spell lesserRestoration() {
-        return new Spell(
-            "Lesser restoration",                                  
-            "Restore 1hp to someone who was knocked down and is with 0 hp.",  
-            15,                                            
-            0,                                          
-            0,                                             
-            1,                                         
-            true,                                           
-            false,                                 
-            "WIS",                                     
-            Set.of("Paladin"),
-            5                     
-        );
-    }
-
-
+    
     public static Spell huntersMark() {
         return new Spell(
             "Hunter's mark",                                  
             "Concentrated attack.",  
-            5,                                            
+            1,                                            
             4,                                          
             3,                                             
             1,                                         
@@ -76,7 +60,7 @@ public class SpellList {
         return new Spell(
             "Nature's blessing",                                  
             "You use the power of nature to heal.",  
-            10,                                            
+            2,                                            
             4,                                          
             2,                                             
             2,                                         
@@ -92,7 +76,7 @@ public class SpellList {
         return new Spell(
             "Deadly attack",                                  
             "Attack infused with nature's wrath.",  
-            15,                                            
+            3,                                            
             6,                                          
             2,                                             
             3,                                         
@@ -108,7 +92,7 @@ public class SpellList {
         return new Spell(
             "Heal wounds",                                  
             "Heal wounds.",  
-            5,                                            
+            1,                                            
             4,                                          
             2,                                             
             2,                                         
@@ -124,7 +108,7 @@ public class SpellList {
         return new Spell(
             "Make wounds",                                  
             "Make wounds.",  
-            5,                                            
+            1,                                            
             4,                                          
             2,                                             
             2,                                         
@@ -140,7 +124,7 @@ public class SpellList {
         return new Spell(
             "Judgement",                                  
             "Strike enemies with holy radiance.",  
-            10,                                            
+            2,                                            
             8,                                          
             2,                                             
             2,                                         
@@ -156,7 +140,7 @@ public class SpellList {
         return new Spell(
             "Ressurection",                                  
             "Ressurect the dead companion from the dead.",  
-            15,                                            
+            3,                                            
             12,                                          
             12,                                             
             50,                                         
@@ -172,13 +156,13 @@ public class SpellList {
         return new Spell(
             "Sqorching ray",                                  
             "A ray of fire.",  
-            5,                                            
+            1,                                            
             12,                                          
             1,                                             
-            0,                                         
+            2,                                         
             false,                                           
             false,                                 
-            "INT",                                     
+            "CHA",                                     
             Set.of("Sorcerer"),
             1                    
         );
@@ -188,13 +172,13 @@ public class SpellList {
         return new Spell(
             "Shatter",                                  
             "A powerful thunger errupts.",  
-            10,                                            
+            2,                                            
             12,                                          
             2,                                             
             2,                                         
             false,                                           
             false,                                 
-            "WIS",                                     
+            "CHA",                                     
             Set.of("Sorcerer"),
             2                    
         );
@@ -204,13 +188,13 @@ public class SpellList {
         return new Spell(
             "Fire ball",                                  
             "When you really want something dead.",  
-            15,                                            
+            3,                                            
             6,                                          
             6,                                             
             6,                                         
             false,                                           
             false,                                 
-            "WIS",                                     
+            "CHA",                                     
             Set.of("Sorcerer"),
             3                    
         );

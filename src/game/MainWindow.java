@@ -10,21 +10,20 @@ import javax.swing.*;
 public class MainWindow extends JFrame {
     private JPanel menuPanel;
     private DungeonViewer dungeonViewerPanel;
+    private StatsContainerPanel statsPanel;
+    private PlayerParty party;
+    private InventoryPanel inventoryPanel;
+    private JTextArea combatLog;
     
     public MainWindow(List<PlayerCharacter> partyMembers) {
         setTitle("Dungeon Game");
         setLayout(new BorderLayout());
+        
     
-        //public void startGameWithParty(PlayerParty party) {
-        //getContentPane().removeAll();
-
-       /*  PlayerParty party = new PlayerParty();
-        party.createCharacters(); */
-    
-        PlayerParty party = new PlayerParty(partyMembers); 
+        party = new PlayerParty(partyMembers); 
 
         Dungeon dungeon = new Dungeon(50, 30);
-        JTextArea combatLog = new JTextArea();
+        combatLog = new JTextArea();
         dungeonViewerPanel = new DungeonViewer(dungeon, combatLog, party, this); 
     
         //  Map Panel
@@ -33,10 +32,10 @@ public class MainWindow extends JFrame {
         mapPanel.add(dungeonViewerPanel, BorderLayout.CENTER);
     
         //  Stats Panel 
-        StatsContainerPanel statsPanel = new StatsContainerPanel(party.getMembers());
+        statsPanel = new StatsContainerPanel(party.getMembers());
     
         //  Inventory Panel 
-        InventoryPanel inventoryPanel = new InventoryPanel();
+        inventoryPanel = new InventoryPanel();
         inventoryPanel.displayInventory(party.getPartyInventory());
         inventoryPanel.setGold(party.getGold());
     
@@ -85,13 +84,83 @@ public class MainWindow extends JFrame {
         repaint();
     }
 
+    private void returnToMainMenu() {
+        int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "Return to main menu? Unsaved progress will be lost.",
+            "Return to Menu",
+            JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            dispose(); // Close game window
+             SwingUtilities.invokeLater(() -> {
+            StartScreen startScreen = new StartScreen();
+            startScreen.setVisible(true); // ← make it visible!
+        });
+        }   
+    }
+
     public void updateMenuForExploration() {
         menuPanel.removeAll();
-        menuPanel.add(new JButton("Menu"));
-        menuPanel.add(new JButton("Options"));
-        menuPanel.add(new JButton("Save"));
-        menuPanel.add(new JButton("Load"));
-        menuPanel.add(new JButton("Quit"));
+
+        JButton menuBtn = new JButton("Menu");
+            menuBtn.addActionListener(e -> returnToMainMenu());
+            menuPanel.add(menuBtn);
+
+        JButton usePotionBtn = new JButton("Use potion");
+            usePotionBtn.addActionListener(e -> {
+                List<PlayerCharacter> alive = party.getMembers().stream()
+                .filter(pc -> pc.getCurrentHP() > 0)
+                .toList();
+
+            if (alive.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No living characters to use a potion.");
+                return;
+            }
+
+            // Get character names
+            String[] names = alive.stream().map(PlayerCharacter::getName).toArray(String[]::new);
+
+            // Ask user to select character
+            String selectedName = (String) JOptionPane.showInputDialog(
+                this,
+                "Choose a character to use the potion:",
+                "Select Character",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                names,
+                names[0]
+            );
+
+            if (selectedName == null) return; // Cancelled
+
+            // Find the selected character
+            PlayerCharacter selected = alive.stream()
+                .filter(pc -> pc.getName().equals(selectedName))
+                .findFirst()
+                .orElse(null);
+
+            if (selected != null) {
+                CombatSystem.showPotionDialog(selected, combatLog);
+            }
+        });
+        menuPanel.add(usePotionBtn);
+
+        JButton quitBtn = new JButton("Quit");
+            quitBtn.addActionListener(e -> {
+                int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "Are you sure you want to quit?",
+                "Confirm Exit",
+                JOptionPane.YES_NO_OPTION
+                );
+                    if (confirm == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                    }
+            });
+            menuPanel.add(quitBtn);
+
         menuPanel.revalidate();
         menuPanel.repaint();
     }
@@ -125,13 +194,21 @@ public class MainWindow extends JFrame {
         menuPanel.repaint();
     }
 
-    public void enableDungeonControls(boolean enable) {
-        dungeonViewerPanel.setKeyListenerEnabled(enable);
+    public DungeonViewer getDungeonViewer() {
+        return dungeonViewerPanel;
     }
 
+    public void refreshStats() {
+        statsPanel.refreshStats(party.getMembers());
+    }
 
-    
-   // public static void main(String[] args) {
-   //     SwingUtilities.invokeLater(MainWindow::new);
-   //}
+    public PlayerParty getParty() {
+        return party;
+    }
+
+    public void refreshInventory() {
+        inventoryPanel.displayInventory(party.getPartyInventory());
+        inventoryPanel.setGold(party.getGold());
+    }
+
 }

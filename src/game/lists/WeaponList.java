@@ -13,7 +13,6 @@ public class WeaponList {
             8,      // Dice of damage
             0,      // hit bonus
             "STR",  // Scaling stat
-            0,      // AC bonus
             1,      // number of dice
             Set.of("Fighter", "Paladin", "Ranger") // Calss permission
         );
@@ -28,7 +27,6 @@ public class WeaponList {
             6,      
             0,      
             "STR",  
-            2,      
             1,      
             Set.of("Fighter", "Paladin", "Ranger") 
         );
@@ -43,7 +41,6 @@ public class WeaponList {
             4,
             0,
             "DEX",
-            0,
             2,
             Set.of("Thief", "Ranger")
         );
@@ -58,7 +55,6 @@ public class WeaponList {
             12,      
             0,      
             "STR",  
-            0,      
             1,      
             Set.of("Fighter", "Paladin")
         );
@@ -73,7 +69,6 @@ public class WeaponList {
             6,      
             0,      
             "STR",  
-            0,      
             1,      
             Set.of("Priest", "Paladin")
         );
@@ -88,7 +83,6 @@ public class WeaponList {
             6,      
             0,      
             "DEX",  
-            0,      
             1,      
             Set.of("Priest", "Sorcerer")
             );
@@ -103,7 +97,6 @@ public class WeaponList {
             4,      
             0,      
             "WIS",  
-            0,      
             2,      
             Set.of("Sorcerer")
             );
@@ -118,7 +111,6 @@ public class WeaponList {
             6,      
             0,      
             "DEX",  
-            0,      
             1,      
             Set.of("Ranger", "Thief")
             );
@@ -133,7 +125,6 @@ public class WeaponList {
             10,      // Dice of damage
             1,      // hit bonus
             "STR",  // Scaling stat
-            0,      // AC bonus
             1,      // number of dice
             Set.of("Fighter", "Paladin", "Ranger") // Calss permission
             );
@@ -147,7 +138,6 @@ public class WeaponList {
             8,      
             1,      
             "STR",  
-            3,      
             1,      
             Set.of("Fighter", "Paladin", "Ranger") 
             );
@@ -162,7 +152,6 @@ public class WeaponList {
             6,
             1,
             "DEX",
-            0,
             2,
             Set.of("Thief", "Ranger")
             );
@@ -177,7 +166,6 @@ public class WeaponList {
             14,      
             1,      
             "STR",  
-            0,      
             1,      
             Set.of("Fighter", "Paladin")
             );
@@ -191,7 +179,6 @@ public class WeaponList {
             8,      
             1,      
             "STR",  
-            0,      
             1,      
             Set.of("Priest", "Paladin")
             );
@@ -206,7 +193,6 @@ public class WeaponList {
             1,      
             "DEX",  
             0,      
-            0,      
             Set.of("Priest", "Sorcerer")
             );
             staff1.setGoldValues(100, 40); 
@@ -220,7 +206,6 @@ public class WeaponList {
             8,      
             1,      
             "WIS",  
-            0,      
             2,      
             Set.of("Sorcerer")
             );
@@ -235,7 +220,6 @@ public class WeaponList {
             8,      
             1,      
             "DEX",  
-            0,      
             1,      
             Set.of("Ranger", "Thief")
             );

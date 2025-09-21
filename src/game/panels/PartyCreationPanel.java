@@ -22,7 +22,7 @@ public class PartyCreationPanel extends JFrame {
         formPanel.add(new JLabel("Name"));
         formPanel.add(new JLabel("Class"));
 
-        String[] classOptions = { "Fighter", "Paladin", "Ranger", "Thief", "Sorcerer", "Priest" };
+        String[] classOptions = { "Fighter", "Paladin", "Ranger", "Sorcerer", "Priest" };
 
         for (int i = 0; i < 4; i++) {
             JTextField nameField = new JTextField("Hero " + (i + 1));
@@ -56,5 +56,6 @@ public class PartyCreationPanel extends JFrame {
         setSize(400, 300);
         setLocationRelativeTo(null);
         setVisible(true);
+        
     }
 }

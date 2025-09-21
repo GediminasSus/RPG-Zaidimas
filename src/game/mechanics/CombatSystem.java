@@ -1,6 +1,5 @@
 package game.mechanics;
 
-
 import game.MainWindow;
 import java.util.*;
 import javax.swing.*;
@@ -16,11 +15,11 @@ public class CombatSystem {
     record CombatActor(Object actor, int initiative, boolean isPlayer) {}
     // turn order
     public static void run(List<PlayerCharacter> pcs, List<Monster> ms, JTextArea log, MainWindow ui) {
+        
         players = pcs;
         monsters = ms;
         combatLog = log;
         uiRef = ui;
-
         
         turnOrder = new ArrayList<>();
         // initiative roll
@@ -38,71 +37,78 @@ public class CombatSystem {
 
         turnOrder.sort((a, b) -> Integer.compare(b.initiative(), a.initiative()));
         combatLog.append("=== Combat Begins ===\n");
-
         turnIndex = 0;
         nextCombatTurn(); // start loop
     }
     
     public static void nextCombatTurn() {
-        if (players.stream().noneMatch(p -> p.getCurrentHP() > 0)|| monsters.stream().noneMatch(m -> !m.isDead())) {
-    
-        combatLog.append("\n=== Combat Ends ===\n");
-    
-        if (uiRef != null) {
-            uiRef.updateMenuForExploration(); // Restore original menu
-            uiRef.enableDungeonControls(true); //  re-enable movement
+        if (combatEnded()) {
+            endCombat();
+            return;
         }
-
-    return;
-}
-
-        if (turnIndex >= turnOrder.size()) turnIndex = 0;
-        // player or monster turn
+        if (turnIndex >= turnOrder.size()) {
+            turnIndex = 0;
+        }
         CombatActor actor = turnOrder.get(turnIndex++);
         if (actor.isPlayer()) {
-            PlayerCharacter pc = (PlayerCharacter) actor.actor();
-            if (pc.getCurrentHP() <= 0) {
-                nextCombatTurn();
-                return;
-            }
-
-            combatLog.append("\n" + pc.getName() + "'s turn.\n");
-            uiRef.updateMenuForCombat(pc, monsters, combatLog);
+            handlePlayerTurn((PlayerCharacter) actor.actor());
         } else {
-            Monster m = (Monster) actor.actor();
-            if (m.isDead()) {
-                nextCombatTurn();
-                return;
-            }
-
-            PlayerCharacter target = players.stream()
-                .filter(p -> p.getCurrentHP() > 0)
-                .findAny().orElse(null);
-            if (target == null) return;
-
-            // monsters attack roll
-            int roll = Dice.roll(1, 20, m.getHitBonus());
-
-            combatLog.append(m.getName() + " attacks " + target.getName() + " → roll " + roll + "\n");
-
-            if (roll >= target.getTotalArmorClass()) {
-                int dmg = Dice.roll(m.getNumDice(), m.getDiceSize(), m.getBonusDamage());
-                target.playerTakeDamage(dmg);
-                combatLog.append("Hit! Deals " + dmg + " damage.\n");
-            } else {
-                combatLog.append("Misses!\n");
-            }
-
-            SwingUtilities.invokeLater(CombatSystem::nextCombatTurn);
+            handleMonsterTurn((Monster) actor.actor());
         }
     }
+
+    private static boolean combatEnded() {
+        return players.stream().noneMatch(p -> p.getCurrentHP() > 0) || monsters.stream().noneMatch(m -> !m.isDead());
+        }
+
+    private static void endCombat() {
+        combatLog.append("\n=== Combat Ends ===\n");
+
+        if (uiRef != null) {
+            uiRef.updateMenuForExploration();     // Restore menu
+            uiRef.getDungeonViewer().setMovementEnabled(true); 
+        }
+    }
+    
+    private static void handlePlayerTurn(PlayerCharacter pc) {
+        if (pc.getCurrentHP() <= 0) {
+            nextCombatTurn(); // Skip dead player
+        return;
+        }
+
+        combatLog.append("\n" + pc.getName() + "'s turn.\n");
+        uiRef.updateMenuForCombat(pc, monsters, combatLog);
+        }
+
+    private static void handleMonsterTurn(Monster m) {
+        if (m.isDead()) {
+            nextCombatTurn(); // Skip dead monster
+        return;
+        }
+
+        PlayerCharacter target = players.stream()
+        .filter(p -> p.getCurrentHP() > 0)
+        .findAny().orElse(null);
+        if (target == null) return;
+
+        int roll = Dice.roll(1, 20, m.getHitBonus());
+        combatLog.append(m.getName() + " attacks " + target.getName() + " → roll " + roll + "\n");
+
+        if (roll >= target.getTotalArmorClass()) {
+            int dmg = Dice.roll(m.getNumDice(), m.getDiceSize(), m.getBonusDamage());
+            target.playerTakeDamage(dmg);
+            uiRef.refreshStats();
+            combatLog.append("Hit! Deals " + dmg + " damage.\n");
+        } else {
+            combatLog.append("Misses!\n");
+        }
+
+        SwingUtilities.invokeLater(CombatSystem::nextCombatTurn);
+        }
 
     public static void playerFinishedTurn() {
         SwingUtilities.invokeLater(CombatSystem::nextCombatTurn);
     }
-
-
-    
 
     public static void performAttack(PlayerCharacter pc, List<Monster> monsters, JTextArea combatLog) {
         
@@ -128,28 +134,52 @@ public class CombatSystem {
     }
 
     public static void showPotionDialog(PlayerCharacter pc, JTextArea combatLog) {
-        List<Item> potions = pc.getInventory().stream()
-            .filter(i -> i instanceof Potion).toList();
+        List<Item> potions = uiRef.getParty().getPartyInventory().stream()
+            .filter(i -> i instanceof Potion)
+            .toList();
+
         if (potions.isEmpty()) {
-            combatLog.append("No potions!\n");
+            combatLog.append("No potions in party inventory!\n");
             return;
         }
-    
-        String[] options = potions.stream().map(Item::getName).toArray(String[]::new);
+
+        String[] options = potions.stream()
+            .map(Item::getName)
+            .toArray(String[]::new);
+
         String selected = (String) JOptionPane.showInputDialog(
-            null, "Choose a potion:", "Use Potion", JOptionPane.PLAIN_MESSAGE, null, options, options[0]
+            null, "Choose a potion:", "Use Potion",
+            JOptionPane.PLAIN_MESSAGE, null, options, options[0]
         );
-    
+
         if (selected == null) return;
-    
-        Potion potion = (Potion) potions.stream().filter(p -> p.getName().equals(selected)).findFirst().orElse(null);
+
+        Potion potion = (Potion) potions.stream()
+            .filter(p -> p.getName().equals(selected))
+            .findFirst()
+            .orElse(null);
+
         if (potion == null) return;
-    
-        pc.heal(Dice.roll(potion.getNumDice(), potion.getDiceSize(), potion.getbBonus()));
-        pc.restoreMana(Dice.roll(potion.getNumDice(), potion.getDiceSize(), potion.getbBonus()));
-        pc.getInventory().remove(potion);
-    
-        combatLog.append(pc.getName() + " uses " + potion.getName() + ".\n");
+
+        if (potion.restoresHealth()) {
+            int healAmount = Dice.roll(potion.getNumDice(), potion.getDiceSize(), potion.getbBonus());
+            pc.heal(healAmount);
+            combatLog.append(pc.getName() + " uses " + potion.getName() + " and restores " + healAmount + " HP.\n");
+        }
+
+        if (potion.restoresMana()) {
+            int manaAmount = Dice.roll(potion.getNumDice(), potion.getDiceSize(), potion.getbBonus());
+            pc.restoreMana(manaAmount);
+            combatLog.append(pc.getName() + " uses " + potion.getName() + " and restores " + manaAmount + " MP.\n");
+        }
+
+        // Remove the used potion from party inventory
+        uiRef.getParty().getPartyInventory().remove(potion);
+
+        // Refresh UI
+        uiRef.refreshStats();
+        uiRef.refreshInventory();  
+
     }
 
     public static void showSpellDialog(PlayerCharacter pc, List<Monster> monsters, JTextArea combatLog) {
@@ -159,24 +189,28 @@ public class CombatSystem {
             return;
         }
     
-        String[] options = spells.stream().map(Spell::getName).toArray(String[]::new);
+        String[] options = spells.stream().map(s -> s.getName() + " (Cost: " + s.getManaCost() + " MP)").toArray(String[]::new);
         String selected = (String) JOptionPane.showInputDialog(
             null, "Choose a spell:", "Cast Spell", JOptionPane.PLAIN_MESSAGE, null, options, options[0]
         );
     
         if (selected == null) return;
+
+        String selectedName = selected.split(" \\(Cost:")[0];
     
-        Spell spell = spells.stream().filter(s -> s.getName().equals(selected)).findFirst().orElse(null);
+        Spell spell = spells.stream().filter(s -> s.getName().equals(selectedName)).findFirst().orElse(null);
         if (spell == null || pc.getCurrentMana() < spell.getManaCost()) {
             combatLog.append("Not enough mana!\n");
             return;
         }
     
         pc.setCurrentMana(pc.getCurrentMana() - spell.getManaCost());
+        uiRef.refreshStats();
     
         if (spell.isHeal()) {
             int heal = Dice.roll(spell.getNumDice(), spell.getDiceSize(), spell.getBonus());
             pc.heal(heal);
+            uiRef.refreshStats();
             combatLog.append(pc.getName() + " casts " + spell.getName() + " and restores " + heal + " HP.\n");
             return;
         }
@@ -202,7 +236,7 @@ public class CombatSystem {
             }
     
         } else {
-            int toHit = Dice.roll(1, 20, pc.getModifier(spell.getScalingStat()));
+            int toHit = Dice.roll(1, 20, (pc.getModifier(spell.getScalingStat())));
             combatLog.append(pc.getName() + " casts " + spell.getName() + " → roll " + toHit + "\n");
     
             if (toHit >= target.getArmorClass()) {
@@ -214,9 +248,4 @@ public class CombatSystem {
             }
         }
     }
-    
-    
-    
-
-    
 }

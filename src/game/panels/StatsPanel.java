@@ -58,4 +58,24 @@ public class StatsPanel extends JPanel {
         armorLabel.setText("Armor: " +
             (pc.getEquippedArmor() != null ? pc.getEquippedArmor().getName() : "None"));
     }
+
+    public void update(PlayerCharacter pc) {
+        nameLabel.setText("Name: " + pc.getName());
+        classLabel.setText("Class: " + pc.getCharacterClass());
+        hpLabel.setText("HP: " + pc.getCurrentHP() + "/" + pc.getMaxHP());
+        mpLabel.setText("MP: " + pc.getCurrentMana() + "/" + pc.getMaxMana());
+        acLabel.setText("AC: " + pc.getTotalArmorClass());
+
+        strLabel.setText("STR: " + pc.getStrength());
+        dexLabel.setText("DEX: " + pc.getDexterity());
+        conLabel.setText("CON: " + pc.getConstitution());
+        intLabel.setText("INT: " + pc.getIntelligence());
+        wisLabel.setText("WIS: " + pc.getWisdom());
+        chaLabel.setText("CHA: " + pc.getCharisma());
+
+        weaponLabel.setText("Weapon: " +
+            (pc.getEquippedWeapon() != null ? pc.getEquippedWeapon().getName() : "None"));
+        armorLabel.setText("Armor: " +
+            (pc.getEquippedArmor() != null ? pc.getEquippedArmor().getName() : "None"));
+}
 }

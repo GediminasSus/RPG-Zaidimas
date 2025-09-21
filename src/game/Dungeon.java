@@ -79,7 +79,6 @@ public class Dungeon {
                 int my = ry + rand.nextInt(rh);
                 if (map[my][mx] == '.') {
                     monsterPositions.add(new int[] { mx, my });
-                    map[my][mx] = 'M'; 
                     break;
                 }
             }

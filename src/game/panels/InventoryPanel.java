@@ -2,7 +2,9 @@ package game.panels;
 
 import game.mechanics.*;
 import java.awt.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.*;
 
 
@@ -26,9 +28,16 @@ public class InventoryPanel extends JPanel {
         goldLabel.setText("Gold: " + gold);
     }
 
-    public void displayInventory(List<Item> items) {
+    public void displayInventory(List<Item> inventory) {
         StringBuilder sb = new StringBuilder();
-        for (Item item : items) {
+        // Group items by name
+        Map<String, Integer> itemCounts = new HashMap<>();
+        for (Item item : inventory) {
+            String itemName = item.getName();
+            itemCounts.put(itemName, itemCounts.getOrDefault(itemName, 0) + 1);
+        }
+        
+      /*  for (Item item : inventory) {
             sb.append("- ").append(item.getName());
             if (item instanceof Weapon weapon) {
                 sb.append(" [Weapon, +").append(weapon.getHitBonus()).append(" hit]");
@@ -38,6 +47,15 @@ public class InventoryPanel extends JPanel {
                 sb.append(" [Potion]");
             }
             sb.append("\n");
+        }*/
+
+        // Build display string
+        for (Map.Entry<String, Integer> entry : itemCounts.entrySet()) {
+            String line = "- " + entry.getKey();
+            if (entry.getValue() > 1) {
+                line += " x" + entry.getValue();
+            }
+            sb.append(line).append("\n");
         }
         inventoryText.setText(sb.toString());
     }

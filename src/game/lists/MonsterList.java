@@ -13,10 +13,8 @@ public class MonsterList {
             1,      // Number of dice
             0,      // bonus
             2,      // hit bonus
-            25,     // XP
-            10, // gold dropped
-            false, // is a pack?
-            0 // if pack what max size
+            10 // gold dropped
+
         );
     }
 
@@ -29,10 +27,8 @@ public class MonsterList {
             1,      // Number of dice
             0,      // bonus
             2,      // hit bonus
-            25,     // XP
-            50, // gold dropped
-            true, // is a pack?
-            5 // if pack what max size
+            50 // gold dropped
+
         );
     }
 
@@ -45,10 +41,8 @@ public class MonsterList {
             1, 
             2, 
             4,
-            50,
-            20,
-            false,
-            0
+            20
+
         );
     }
 
@@ -61,10 +55,8 @@ public class MonsterList {
             1, 
             1,
             3,
-            35,
-            10,
-            false,
-            0
+            10
+
         );
     }
 
@@ -77,10 +69,8 @@ public class MonsterList {
             1, 
             1,
             3,
-            35,
-            10,
-            true,
-            5
+            10
+
         );
     }
 
@@ -93,10 +83,8 @@ public class MonsterList {
             2, 
             0, 
             1,
-            40,
-            50,
-            false,
-            0
+            50
+
         );
     }
 
@@ -109,10 +97,8 @@ public class MonsterList {
             1, 
             2, 
             4,
-            100,
-            100,
-            false,
-            0
+            100
+
         );
     }
 }

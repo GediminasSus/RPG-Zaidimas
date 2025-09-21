@@ -9,6 +9,7 @@ public class PlayerParty {
     private final List<PlayerCharacter> members;
     private final List<Item> partyInventory;
     private int gold;
+    
 
     public PlayerParty(List<PlayerCharacter> customMembers) {
         this.members = customMembers;
@@ -16,7 +17,7 @@ public class PlayerParty {
         this.gold = 100;
 
         for (PlayerCharacter pc : customMembers) {
-            StartingEquipment.assign(pc);
+            StartingEquipment.assign(pc, this);
         }
     }
 

@@ -34,11 +34,10 @@ public class PlayerCharacter {
     private void applyClassStats(String cls) {
         switch (cls.toLowerCase()) {
             case "fighter" -> setStats(16, 12, 14, 8, 10, 10, 20, 0);
-            case "paladin" -> setStats(14, 10, 14, 10, 12, 12, 18, 4);
+            case "paladin" -> setStats(14, 10, 14, 10, 12, 16, 18, 2);
             case "ranger"  -> setStats(12, 16, 12, 10, 10, 10, 16, 2);
-            case "thief"   -> setStats(10, 18, 12, 10, 10, 12, 14, 0);
-            case "sorcerer"-> setStats(8, 12, 10, 18, 10, 10, 12, 12);
-            case "priest"  -> setStats(10, 10, 14, 10, 16, 10, 16, 10);
+            case "sorcerer"-> setStats(8, 12, 10, 14, 10, 16, 12, 4);
+            case "priest"  -> setStats(10, 10, 14, 14, 16, 10, 16, 4);
             default         -> setStats(10, 10, 10, 10, 10, 10, 10, 0);
         }
     }
