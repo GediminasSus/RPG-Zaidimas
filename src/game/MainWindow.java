@@ -19,6 +19,7 @@ public class MainWindow extends JFrame {
         setTitle("Dungeon Game");
         setLayout(new BorderLayout());
         
+        
     
         party = new PlayerParty(partyMembers); 
 
@@ -102,97 +103,52 @@ public class MainWindow extends JFrame {
     }
 
     public void updateMenuForExploration() {
-        menuPanel.removeAll();
+    menuPanel.removeAll();
 
-        JButton menuBtn = new JButton("Menu");
-            menuBtn.addActionListener(e -> returnToMainMenu());
-            menuPanel.add(menuBtn);
+    JButton menuBtn = new JButton("Menu");
+    menuBtn.addActionListener(e -> returnToMainMenu());
+    menuPanel.add(menuBtn);
 
-        JButton usePotionBtn = new JButton("Use potion");
-            usePotionBtn.addActionListener(e -> {
-                List<PlayerCharacter> alive = party.getMembers().stream()
-                .filter(pc -> pc.getCurrentHP() > 0)
-                .toList();
-
-            if (alive.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No living characters to use a potion.");
-                return;
-            }
-
-            // Get character names
-            String[] names = alive.stream().map(PlayerCharacter::getName).toArray(String[]::new);
-
-            // Ask user to select character
-            String selectedName = (String) JOptionPane.showInputDialog(
-                this,
-                "Choose a character to use the potion:",
-                "Select Character",
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                names,
-                names[0]
-            );
-
-            if (selectedName == null) return; // Cancelled
-
-            // Find the selected character
-            PlayerCharacter selected = alive.stream()
-                .filter(pc -> pc.getName().equals(selectedName))
-                .findFirst()
-                .orElse(null);
-
-            if (selected != null) {
-                CombatSystem.showPotionDialog(selected, combatLog);
-            }
-        });
-        menuPanel.add(usePotionBtn);
-
-        JButton quitBtn = new JButton("Quit");
-            quitBtn.addActionListener(e -> {
-                int confirm = JOptionPane.showConfirmDialog(
-                this,
-                "Are you sure you want to quit?",
-                "Confirm Exit",
-                JOptionPane.YES_NO_OPTION
-                );
-                    if (confirm == JOptionPane.YES_OPTION) {
-                    System.exit(0);
-                    }
-            });
-            menuPanel.add(quitBtn);
-
-        menuPanel.revalidate();
-        menuPanel.repaint();
+    menuPanel.revalidate();
+    menuPanel.repaint();
     }
 
-    public void updateMenuForCombat(PlayerCharacter pc, List<Monster> monsters, JTextArea combatLog) {
-        menuPanel.removeAll();
-    
-        JButton attackBtn = new JButton("Attack");
-        JButton spellBtn = new JButton("Cast Spell");
-        JButton potionBtn = new JButton("Use Potion");
-    
-        attackBtn.addActionListener(e -> {
-            CombatSystem.performAttack(pc, monsters, combatLog);
-            CombatSystem.playerFinishedTurn();
-        });
-    
-        spellBtn.addActionListener(e -> {
-            CombatSystem.showSpellDialog(pc, monsters, combatLog);
-            CombatSystem.playerFinishedTurn();
-        });
-    
-        potionBtn.addActionListener(e -> {
-            CombatSystem.showPotionDialog(pc, combatLog);
-            CombatSystem.playerFinishedTurn();
-        });
-    
-        menuPanel.add(attackBtn);
-        menuPanel.add(spellBtn);
-        menuPanel.add(potionBtn);
-        menuPanel.revalidate();
-        menuPanel.repaint();
-    }
+    public void updateMenuForCombat(PlayerCharacter pc, List<Monster> monsters, JTextArea combatLog, CombatSystem combat) {
+    menuPanel.removeAll();
+
+    JButton attackBtn = new JButton("Attack");
+    JButton spellBtn = new JButton("Cast Spell");
+    JButton potionBtn = new JButton("Use Potion");
+
+    attackBtn.addActionListener(e -> {
+        Monster target = monsters.stream()
+            .filter(m -> !m.isDead())
+            .findFirst()
+            .orElse(null);
+
+        if (target != null) {
+            ActionService.attack(pc, target, combatLog);
+        }
+        combat.playerFinishedTurn();   // ✅ now works
+    });
+
+    spellBtn.addActionListener(e -> {
+        combat.showSpellDialog(pc);    // ✅ instance method
+        combat.playerFinishedTurn();
+    });
+
+    potionBtn.addActionListener(e -> {
+        combat.showPotionDialog(pc);   // ✅ instance method
+        combat.playerFinishedTurn();
+    });
+
+    menuPanel.add(attackBtn);
+    menuPanel.add(spellBtn);
+    menuPanel.add(potionBtn);
+    menuPanel.revalidate();
+    menuPanel.repaint();
+}
+
 
     public DungeonViewer getDungeonViewer() {
         return dungeonViewerPanel;

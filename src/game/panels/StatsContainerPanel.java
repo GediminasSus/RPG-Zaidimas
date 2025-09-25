@@ -10,14 +10,13 @@ public class StatsContainerPanel extends JPanel {
     private final List<StatsPanel> panelList = new ArrayList<>();
 
     public StatsContainerPanel(List<PlayerCharacter> party) {
-        setLayout(new GridLayout(2, 2, 5, 5));
+        setLayout(new GridLayout(2, 2, 5, 5)); // always 4 slots
         setBorder(BorderFactory.createTitledBorder("Party Stats"));
 
         for (PlayerCharacter pc : party) {
             StatsPanel panel = new StatsPanel();
-            panel.displayCharacter(pc);
-            panel.setPreferredSize(new Dimension(250, 150));
-            panel.setFont(new Font("SansSerif", Font.PLAIN, 10));
+            panel.update(pc);
+            panel.setPreferredSize(new Dimension(250, 150)); // fixed size to match MainWindow layout
             panelList.add(panel);
             add(panel);
         }

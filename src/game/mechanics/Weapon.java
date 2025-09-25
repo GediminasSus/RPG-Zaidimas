@@ -1,56 +1,40 @@
 package game.mechanics;
-import java.util.Set;
+
+import game.enums.ItemType;
 
 public class Weapon extends Item {
-    private final int diceSize;           // Damage dice from 1-12
-    private final int hitBonus;             // bonus hit chance 0-10
-    private final String scalingStat;                      
-    private int numDice = 1;                // standart numeber of dice for damage. 1-2
-    private final Set<String> allowedClasses; // class permissions
-    
-    public Weapon(String name, String description, int diceSize, int hitBonus,
-                  String scalingStat, int numDice, Set<String> allowedClasses) {
-        super(name, description);
+    private final int diceSize;       // damage dice (e.g., d8)
+    private final int hitBonus;       // hit chance bonus
+    private final int allowedClasses; // class permissions
+
+    public Weapon(String name, String description, int goldValue, int diceSize, int hitBonus, int allowedClasses) {
+        super(name, description, goldValue); // ✅ goldValue added
         this.diceSize = diceSize;
         this.hitBonus = hitBonus;
-        this.scalingStat = scalingStat.toUpperCase(); 
         this.allowedClasses = allowedClasses;
-        
-        this.numDice = numDice;
     }
-
-    
-   
 
     public int getDiceSize() {
         return diceSize;
-    }
-
-    public int getNumDice() {
-        return numDice;
     }
 
     public int getHitBonus() {
         return hitBonus;
     }
 
-    public String getScalingStat() {
-        return scalingStat;
-    }
-
-
-    public Set<String> getAllowedClasses() {
+    public int getAllowedClasses() {
         return allowedClasses;
     }
 
     @Override
-    public String getType() {
-        return "Weapon";
+    public ItemType getType() {
+        return ItemType.WEAPON; // ✅ enum instead of string
     }
 
     @Override
     public String toString() {
-        return name + " (" + getType() + ") - " + numDice + "d" + diceSize +
-               ", +" + hitBonus + " hit, scales with " + scalingStat;
+        return name + " (" + getType() + ") - d" + diceSize +
+               ", +" + hitBonus + " hit, " +
+               getGoldValue() + "g";
     }
 }

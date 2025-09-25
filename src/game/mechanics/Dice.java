@@ -6,35 +6,29 @@ public class Dice {
     private Dice() {}
     private static final Random rand = new Random();
 
-    public static int roll(int numberOfDice, int diceSides) {
-        return roll(numberOfDice, diceSides, 0, false, false);
+    // Core roller
+    private static int roll(int sides) {
+        return rand.nextInt(sides) + 1;
     }
 
-    public static int roll(int numberOfDice, int diceSides, int bonus) {
-        return roll(numberOfDice, diceSides, bonus, false, false);
+    // Specific rolls for clarity
+    public static int initiativeRoll() {
+        return roll(20);
     }
 
-    public static int roll(int numberOfDice, int diceSides, int bonus, boolean advantage, boolean disadvantage) {
-        if (advantage && disadvantage) {
-            advantage = false;
-            disadvantage = false;
-        }
-
-        int result = singleRoll(numberOfDice, diceSides, bonus);
-
-        if (advantage || disadvantage) {
-            int second = singleRoll(numberOfDice, diceSides, bonus);
-            return advantage ? Math.max(result, second) : Math.min(result, second);
-        }
-
-        return result;
+    public static int attackRoll(int hitBonus) {
+        return roll(20) + hitBonus;
     }
 
-    private static int singleRoll(int numberOfDice, int diceSides, int bonus) {
-        int total = 0;
-        for (int i = 0; i < numberOfDice; i++) {
-            total += rand.nextInt(diceSides) + 1 + bonus;
-        }
-        return total;
+    public static int damageRoll(int diceSize, int bonus) {
+        return roll(diceSize) + bonus;
+    }
+
+    public static int potionRoll(int diceSize, int bonus) {
+        return roll(diceSize) + bonus;
+    }
+
+    public static int spellRoll(int diceSize, int bonus) {
+        return roll(diceSize) + bonus;
     }
 }

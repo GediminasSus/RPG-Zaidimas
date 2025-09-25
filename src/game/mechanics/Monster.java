@@ -1,46 +1,26 @@
 package game.mechanics;
 
-public class Monster {
-    private final String name;
-    private int currentHP;
-    private final int maxHP;
-    private final int armorClass;
-    private final int diceSize;
-    private final int numDice;
-    private final int bonusDamage;
+public class Monster extends Character {
+    private final int damageDice;
     private final int hitBonus;
-    private final int goldDrop;
 
-    
-    
-
-    public Monster(String name, int maxHP, int armorClass,
-                   int diceSize, int numDice, int bonusDamage,
-                   int hitBonus, int goldDrop) {
-        this.name = name;
-        this.maxHP = maxHP;
-        this.currentHP = maxHP;
-        this.armorClass = armorClass;
-        this.diceSize = diceSize;
-        this.numDice = numDice;
-        this.bonusDamage = bonusDamage;
+    public Monster(String name, int hp, int attackPower, int spellPower, int hitBonus, int damageDice) {
+        super(name);
+        this.maxHP = hp;
+        this.currentHP = hp;
+        this.attackPower = attackPower;
+        this.spellPower = spellPower;
         this.hitBonus = hitBonus;
-        this.goldDrop = goldDrop;      
+        this.damageDice = damageDice;
     }
 
-    public int getDiceSize() { return diceSize; }
-    public int getNumDice() { return numDice; }
-    public int getBonusDamage() {return bonusDamage; }
-    public String getName() { return name; }
-    public int getHP() { return currentHP; }
-    public int getMaxHP() { return maxHP; }
-    public int getArmorClass() { return armorClass; }
-    public boolean isAlive() { return currentHP > 0; }
+    @Override
+    public int getCharacterClass() {
+        // Monsters don't use classes, return -1 or special constant
+        return -1;
+    }
+
     public int getHitBonus() { return hitBonus; }
-    public boolean isDead() { return currentHP <= 0; }
-
-    public void takeDamage(int amount) {
-        currentHP = Math.max(0, currentHP - amount);
-    }
-    
+    public int getDamageDice() { return damageDice; }
+    public int getAttackPower() { return attackPower; }
 }

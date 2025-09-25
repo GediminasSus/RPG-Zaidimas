@@ -1,16 +1,14 @@
-
 package game.mechanics;
-import java.util.Set;
+
+import game.enums.ItemType;
 
 public class Armor extends Item {
     private final int acBonus;
-    private final int dexBonusCap; 
-    private final Set<String> allowedClasses;
+    private final int allowedClasses;
 
-    public Armor(String name, String description, int acBonus, int dexBonusCap, Set<String> allowedClasses) {
-        super(name, description);
+    public Armor(String name, String description, int goldValue, int acBonus, int allowedClasses) {
+        super(name, description, goldValue); // ✅ pass goldValue to Item
         this.acBonus = acBonus;
-        this.dexBonusCap = dexBonusCap;
         this.allowedClasses = allowedClasses;
     }
 
@@ -18,21 +16,18 @@ public class Armor extends Item {
         return acBonus;
     }
 
-    public int getDexBonusCap() {
-        return dexBonusCap;
-    }
-
-    public Set<String> getAllowedClasses() {
+    public int getAllowedClasses() {
         return allowedClasses;
     }
 
     @Override
-    public String getType() {
-        return "Armor";
+    public ItemType getType() {
+        return ItemType.ARMOR; // ✅ enum instead of string
     }
 
     @Override
     public String toString() {
-        return name + " (" + getType() + ") - +" + acBonus + " AC, DEX cap +" + dexBonusCap;
+        return name + " (" + getType() + ") - +" + acBonus + " AC, " +
+               getGoldValue() + "g";
     }
 }

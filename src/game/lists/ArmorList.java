@@ -1,6 +1,6 @@
 package game.lists;
 
-import java.util.Set;
+
 
 import game.mechanics.Armor;
 
@@ -8,124 +8,104 @@ import game.mechanics.Armor;
 public class ArmorList {
     // basic armor ----------------------------------------------------------------------------------------------------
     public static Armor leatherArmor() {
-        Armor leatherArmor = new Armor(
-        "Leather Armor",                                // Name
-        "Light armor with good mobility.",       // Description
-        1,                                           // base AC
-        2,                                       // max DEX bonus
-        Set.of("Fighter", "Paladin", "Ranger", "Thief")        // Class permissions
+        return new Armor(
+        "Leather Armor",                                
+        "Light armor with good mobility.",
+        50,       
+        1,                                           
+        1       
         );
-        leatherArmor.setGoldValues(150, 60);
-        return leatherArmor;
     }
 
     public static Armor studdedArmor() {
-         Armor studdedArmor = new Armor(
+        return new Armor(
         "Studded Armor",
         "Basic studded leather armor.",
+        50,
         2,
-        2,
-        Set.of("Fighter", "Paladin", "Ranger")
+        1
         );
-        studdedArmor.setGoldValues(150, 60);
-        return studdedArmor;
     }    
     
     public static Armor chainmail() {
-         Armor chainmail = new Armor(
+        return new Armor(
         "Chainmail",
         "Heavy armor that doesn't benefit from agility.",
+        50,
         3,
-        0, 
-        Set.of("Fighter", "Paladin")
+        1
         );
-        chainmail.setGoldValues(150, 60);
-        return chainmail;
     }
 
     public static Armor platemail() {
-         Armor platemail = new Armor(
+        return new Armor(
         "Plaitmail",
         "Heavy armor of heavy infantry.",
+        50,
         4,
-        0, 
-        Set.of("Fighter", "Paladin")
+        1
         );
-        platemail.setGoldValues(150, 60);
-        return platemail;
     }
 
     public static Armor robes() {
-         Armor robes = new Armor(
+        return new Armor(
         "Robes",
         "Robes offering limited protection but full mobility.",
+        50,
         0,
-        3,
-        Set.of("Priest", "Sorcerer")
+        2
         );
-        robes.setGoldValues(150, 60);
-        return robes;
     }      
 
     // +1 armor ----------------------------------------------------------------------------------------------------
     public static Armor leatherArmor1() {
-         Armor leatherArmor1 = new Armor(
-        "Leather Armor + 1",                                // Name
-        "Hand crafted leather armor.",       // Description
-        2,                                           // base AC
-        3,                                       // max DEX bonus
-        Set.of("Fighter", "Paladin", "Ranger", "Thief")        // Class permissions
+        return new Armor(
+        "Leather Armor + 1",                                
+        "Hand crafted leather armor.",
+        50,       
+        2,                                           
+        2        
         );
-        leatherArmor1.setGoldValues(150, 60);
-        return leatherArmor1;
     }
 
     public static Armor studdedArmor1() {
-         Armor studdedArmor1 = new Armor(
+        return new Armor(
         "Studded Armor + 1",
         "Quality studded leather armor.",
+        50,
         3,
-        3,
-        Set.of("Fighter", "Paladin", "Ranger")
+        1
         );
-        studdedArmor1.setGoldValues(150, 60);
-        return studdedArmor1;
     }    
     
     public static Armor chainmail1() {
-         Armor chainmail1 = new Armor(
+        return new Armor(
         "Chainmail + 1",
         "Sturdy armor made from light material.",
+        50,
         4,
-        1, 
-        Set.of("Fighter", "Paladin")
+        1
         );
-        chainmail1.setGoldValues(150, 60);
-        return chainmail1;
     }
 
     public static Armor platemail1() {
-         Armor platemail1 = new Armor(
+        return new Armor(
         "Plaitmail + 1",
         "Plate of the field general.",
+        50,
         6,
-        0, 
-        Set.of("Fighter", "Paladin")
+        1
         );
-        platemail1.setGoldValues(150, 60);
-        return platemail1;
     }
 
     public static Armor robes1() {
-         Armor robes1 = new Armor(
+        return new Armor(
         "Robes + 1",
         "Magically enchanted robes.",
+        50,
         2,
-        4,
-        Set.of("Priest", "Sorcerer")
+        1
         );
-        robes1.setGoldValues(150, 60);
-        return robes1;
     }      
     
 }

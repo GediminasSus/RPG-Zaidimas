@@ -1,141 +1,49 @@
 package game.mechanics;
 
-import java.util.ArrayList;
-import java.util.List;
+public class PlayerCharacter extends Character {
+    private final int characterClass;
 
-public class PlayerCharacter {
-    private final String name;
-    private final String characterClass;
-    private int strength;
-    private int dexterity;
-    private int constitution;
-    private int intelligence;
-    private int wisdom;
-    private int charisma;
-    private int currentHP;
-    private int maxHP;
-    private int currentMana;
-    private int maxMana;
-    private Weapon equippedWeapon;
-    private Armor equippedArmor;
-    private final List<Item> inventory = new ArrayList<>();
-    private final List<Spell> knownSpells = new ArrayList<>();
-
-    public PlayerCharacter(String name, String characterClass) {
-        this.name = name;
+    public PlayerCharacter(String name, int characterClass) {
+        super(name);
         this.characterClass = characterClass;
-        applyClassStats(characterClass);
+        applyClassStats();
     }
 
-    public static PlayerCharacter create(String name, String characterClass) {
+    public static PlayerCharacter create(String name, int characterClass) {
         return new PlayerCharacter(name, characterClass);
     }
 
-    private void applyClassStats(String cls) {
-        switch (cls.toLowerCase()) {
-            case "fighter" -> setStats(16, 12, 14, 8, 10, 10, 20, 0);
-            case "paladin" -> setStats(14, 10, 14, 10, 12, 16, 18, 2);
-            case "ranger"  -> setStats(12, 16, 12, 10, 10, 10, 16, 2);
-            case "sorcerer"-> setStats(8, 12, 10, 14, 10, 16, 12, 4);
-            case "priest"  -> setStats(10, 10, 14, 14, 16, 10, 16, 4);
-            default         -> setStats(10, 10, 10, 10, 10, 10, 10, 0);
+    private void applyClassStats() {
+        switch (characterClass) {
+            case 1 :
+                maxHP = 30;
+                currentHP = 30;
+                attackPower = 8;
+                spellPower = 2;
+                maxMana = 5;
+                currentMana = 5;
+                break;
+            case 2 :
+                maxHP = 20;
+                currentHP = 20;
+                attackPower = 3;
+                spellPower = 10;
+                maxMana = 20;
+                currentMana = 20;
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown class: " + characterClass);
         }
     }
+    @Override
+    public int getCharacterClass() { return characterClass; }
 
-    public void setStats(int str, int dex, int con, int intel, int wis, int cha, int maxHP, int maxMana) {
-        this.strength = str;
-        this.dexterity = dex;
-        this.constitution = con;
-        this.intelligence = intel;
-        this.wisdom = wis;
-        this.charisma = cha;
-        this.maxHP = maxHP;
-        this.currentHP = maxHP;
-        this.maxMana = maxMana;
-        this.currentMana = maxMana;
-    }
+    public String getClassName() {
+        return switch (characterClass) {
+            case 1 -> "Fighter";
+            case 2 -> "Mage";
+            default -> "Unknown";
+    };
+}
 
-    
-  
-    public String getName() { return name; }
-    public String getCharacterClass() { return characterClass; }
-    public int getStrength() { return strength; }
-    public int getDexterity() { return dexterity; }
-    public int getConstitution() { return constitution; }
-    public int getIntelligence() { return intelligence; }
-    public int getWisdom() { return wisdom; }
-    public int getCharisma() { return charisma; }
-    public int getCurrentHP() { return currentHP; }
-    public int getMaxHP() { return maxHP; }
-    public int getCurrentMana() { return currentMana; }
-    public int getMaxMana() { return maxMana; }
-
-    public List<Item> getInventory() { return inventory; }
-    public List<Spell> getKnownSpells() { return knownSpells; }
-
-    public Weapon getEquippedWeapon() { return equippedWeapon; }
-    public void setEquippedWeapon(Weapon weapon) { this.equippedWeapon = weapon; }
-
-    public Armor getEquippedArmor() { return equippedArmor; }
-    public void setEquippedArmor(Armor armor) { this.equippedArmor = armor; }
-
-   
-    public int getModifier(String statName) {
-        int stat = switch (statName.toUpperCase()) {
-            case "STR" -> strength;
-            case "DEX" -> dexterity;
-            case "CON" -> constitution;
-            case "INT" -> intelligence;
-            case "WIS" -> wisdom;
-            case "CHA" -> charisma;
-            default -> 10;
-        };
-        return (stat - 10) / 2;
-    }
-
-    public int getTotalArmorClass() {
-        int base = 10;
-        if (equippedArmor != null) {
-            int dexMod = getModifier("DEX");
-            int cap = equippedArmor.getDexBonusCap();
-            base += equippedArmor.getAcBonus() + Math.min(dexMod, cap);
-        }
-        return base;
-    }
-
-    public boolean equipWeapon(Weapon weapon) {
-        if (weapon.getAllowedClasses().contains(characterClass)) {
-            this.equippedWeapon = weapon;
-            return true;
-        }
-        return false;
-    }
-
-    public boolean equipArmor(Armor armor) {
-        if (armor.getAllowedClasses().contains(characterClass)) {
-            this.equippedArmor = armor;
-            return true;
-        }
-        return false;
-    }
-
-    public void learnSpell(Spell spell) {
-        knownSpells.add(spell);
-    }
-
-    public void heal(int amount) {
-        currentHP = Math.min(maxHP, currentHP + amount);
-    }
-
-    public void restoreMana(int amount) {
-        currentMana = Math.min(maxMana, currentMana + amount);
-    }
-
-    public void playerTakeDamage(int amount) {
-        currentHP = Math.max(0, currentHP - amount);
-    }
-
-    public void setCurrentMana(int mana) {
-        this.currentMana = Math.max(0, Math.min(mana, maxMana));
-    }
 }

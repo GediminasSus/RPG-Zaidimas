@@ -1,29 +1,27 @@
 package game.mechanics;
 
+import game.enums.ItemType;
 
 public abstract class Item {
     protected String name;
     protected String description;
-    protected int goldValueBuy = 0;
-    protected int goldValueSell = 0;
+    protected int goldValue; // base value
 
-    public int getGoldValueBuy() { return goldValueBuy; }
-
-    public int getGoldValueSell() { return goldValueSell; }
-
-    public void setGoldValues(int buy, int sell) {
-        this.goldValueBuy = buy;
-        this.goldValueSell = sell;
-    }
-
-
-    protected  Item(String name, String description) {
+    protected Item(String name, String description, int goldValue) {
+        if (goldValue < 0) throw new IllegalArgumentException("Gold value must be >= 0");
         this.name = name;
         this.description = description;
+        this.goldValue = goldValue;
     }
 
     public String getName() { return name; }
     public String getDescription() { return description; }
+    public int getGoldValue() { return goldValue; }
 
-    public abstract String getType();
+    // Selling price is always half
+    public int getSellValue() {
+        return goldValue / 2;
+    }
+
+    public abstract ItemType getType();
 }

@@ -1,17 +1,16 @@
 package game.mechanics;
 
+import game.enums.ItemType;
+
 public class Potion extends Item {
     private final int diceSize; 
-    private final int numDice; 
     private final int bonus; 
     private final boolean restoreHealth; 
-    private final boolean restoreMana; 
+    private final boolean restoreMana;  
 
-
-    public Potion(String name, String description, int diceSize, int numDice, int bonus, boolean restoreHealth, boolean restoreMana) {
-        super(name, description);
+    public Potion(String name, String description, int goldValue, int diceSize, int bonus, boolean restoreHealth, boolean restoreMana) {
+        super(name, description, goldValue); // ✅ goldValue added
         this.diceSize = diceSize;
-        this.numDice = numDice;
         this.bonus = bonus;
         this.restoreHealth = restoreHealth;
         this.restoreMana = restoreMana;
@@ -25,17 +24,17 @@ public class Potion extends Item {
         return restoreMana;
     }
 
-    public int getNumDice() { 
-        return numDice; }
     public int getDiceSize() { 
-        return diceSize; }
-    public int getbBonus() {
-        return bonus; }
-    
+        return diceSize;
+    }
+
+    public int getBonus() { // ✅ renamed from getbBonus
+        return bonus;
+    }
 
     @Override
-    public String getType() {
-        return "Potion";
+    public ItemType getType() {
+        return ItemType.POTION; // ✅ enum instead of string
     }
 
     @Override
@@ -43,6 +42,7 @@ public class Potion extends Item {
         return name + " (" + getType() + ") - Restores " +
                (restoreHealth ? "Health " : "") +
                (restoreMana ? "Mana " : "") +
-               "[" + numDice + "d" + diceSize + " + " + bonus + "]";
+               "[1D" + diceSize + " + " + bonus + "], " +
+               getGoldValue() + "g";
     }
 }
