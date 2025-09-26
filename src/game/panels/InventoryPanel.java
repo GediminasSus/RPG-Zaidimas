@@ -1,6 +1,6 @@
 package game.panels;
 
-import game.mechanics.Item;
+import game.entities.itmes.Item;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
@@ -33,14 +33,14 @@ public class InventoryPanel extends JPanel {
             return;
         }
 
-        // Group items by name
+        
         Map<String, Integer> itemCounts = new HashMap<>();
         for (Item item : inventory) {
             String itemName = item.getName();
             itemCounts.put(itemName, itemCounts.getOrDefault(itemName, 0) + 1);
         }
 
-        // Build display string
+        
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<String, Integer> entry : itemCounts.entrySet()) {
             sb.append(formatItemLine(entry.getKey(), entry.getValue())).append("\n");

@@ -1,7 +1,7 @@
 package game.panels;
 
-import game.MainWindow;
-import game.mechanics.PlayerCharacter;
+import game.entities.PlayerCharacter;
+import game.main.MainWindow;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,22 +15,19 @@ public class PartyCreationPanel extends JPanel {
     private static final String[] CLASS_OPTIONS = { "Fighter", "Mage" };
 
     public PartyCreationPanel(JFrame parentFrame) {
-        setLayout(new GridBagLayout()); // centers everything
+        setLayout(new GridBagLayout());  
 
-        // --- Inner form box ---
         JPanel formBox = new JPanel(new BorderLayout());
-        formBox.setPreferredSize(new Dimension(400, 300)); // fixed size box
+        formBox.setPreferredSize(new Dimension(400, 300)); 
         formBox.setBorder(BorderFactory.createTitledBorder("Create Your Party"));
 
-        // --- Form panel ---
+
         JPanel formPanel = new JPanel(new GridLayout(PARTY_SIZE + 1, 2, 10, 10));
         formPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Headers
         formPanel.add(new JLabel("Name"));
         formPanel.add(new JLabel("Class"));
 
-        // Inputs
         for (int i = 0; i < PARTY_SIZE; i++) {
             JTextField nameField = new JTextField("Hero " + (i + 1));
             JComboBox<String> classBox = new JComboBox<>(CLASS_OPTIONS);
@@ -40,7 +37,6 @@ public class PartyCreationPanel extends JPanel {
             formPanel.add(classBox);
         }
 
-        // --- Button panel ---
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JButton startBtn = new JButton("Start Game");
         JButton backBtn = new JButton("Back");
@@ -48,14 +44,11 @@ public class PartyCreationPanel extends JPanel {
         buttonPanel.add(startBtn);
         buttonPanel.add(backBtn);
 
-        // Add form and buttons into box
         formBox.add(formPanel, BorderLayout.CENTER);
         formBox.add(buttonPanel, BorderLayout.SOUTH);
 
-        // Add to center of main panel
         add(formBox);
 
-        // --- Actions ---
         startBtn.addActionListener(e -> startGame(parentFrame));
         backBtn.addActionListener(e -> {
             parentFrame.setContentPane(new StartScreen().getContentPane());
@@ -80,7 +73,7 @@ public class PartyCreationPanel extends JPanel {
             party.add(pc);
         }
 
-        new MainWindow(party);
+        MainWindow.launch(party);
         parentFrame.dispose();
     }
 

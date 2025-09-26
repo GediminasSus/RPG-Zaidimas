@@ -1,5 +1,7 @@
 package game.mechanics;
 
+import game.entities.Monster;
+import game.entities.PlayerCharacter;
 import java.util.*;
 
 public class CombatEngine {

@@ -1,10 +1,19 @@
 package game.mechanics;
 
+import game.entities.Character;
+import game.entities.Monster;
+import game.entities.PlayerCharacter;
+import game.entities.itmes.Potion;
+import game.entities.itmes.Spell;
+import game.entities.itmes.Weapon;
+import java.util.Objects;
 import javax.swing.*;
 
 public class ActionService {
+    private ActionService() {}
 
     public static void attack(Character attacker, Character defender, JTextArea log) {
+        Objects.requireNonNull(attacker, "Attacker cannot be null");
         if (defender == null || !defender.isAlive()) return;
 
         int hitBonus;

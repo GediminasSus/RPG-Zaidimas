@@ -1,6 +1,11 @@
 package game.mechanics;
 
-import game.MainWindow;
+import game.entities.Monster;
+import game.entities.PlayerCharacter;
+import game.entities.itmes.Item;
+import game.entities.itmes.Potion;
+import game.entities.itmes.Spell;
+import game.main.MainWindow;
 import java.util.List;
 import javax.swing.*;
 

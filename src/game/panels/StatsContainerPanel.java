@@ -1,6 +1,6 @@
 package game.panels;
 
-import game.mechanics.PlayerCharacter;
+import game.entities.PlayerCharacter;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;

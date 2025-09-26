@@ -1,6 +1,6 @@
 package game.panels;
 
-import game.mechanics.PlayerCharacter;
+import game.entities.PlayerCharacter;
 import java.awt.*;
 import javax.swing.*;
 
@@ -35,7 +35,7 @@ public class StatsPanel extends JPanel {
         weaponLabel.setText("Weapon: -");
         armorLabel.setText("Armor: -");
 
-        // Apply small font to the rest
+        
         for (JLabel lbl : new JLabel[]{hpLabel, mpLabel, acLabel, apLabel, spLabel, weaponLabel, armorLabel}) {
             lbl.setFont(smallFont);
         }
